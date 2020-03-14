@@ -31,7 +31,7 @@
             position: fixed;
             transform: rotate(-90deg) scale(3);
             right: 40px;
-            top: 100px;
+            top: 300px;
             cursor: pointer;
         }
 
@@ -43,7 +43,7 @@
             position: fixed;
             transform: rotate(90deg) scale(3);
             left: 40px;
-            top: 100px;
+            top: 300px;
             cursor: pointer;
         }
 
