@@ -3,10 +3,15 @@
             background-image: url('banner.jpg');
             background-size: cover;
 	    background-repeat: no-repeat;
-	    max-width:100%;
-            height:auto;
 	    background-color: #1f1f1f !important;
         }
+
+@media (max-width: 767px)  {
+html {
+            padding: 0;
+	    background-color: #1f1f1f !important;
+        }
+	}
         
        img {
 	   max-width:100%;
