@@ -3,6 +3,8 @@
             background-image: url('banner.jpg');
             background-size: cover;
 	    background-repeat: no-repeat;
+	    max-width:100%;
+            height:auto;
         }
         
        img {
