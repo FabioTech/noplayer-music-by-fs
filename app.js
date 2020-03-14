@@ -19,7 +19,7 @@ $(document).ready(function () {
     var result = null;
     $.ajax({
         type: "GET",
-        url: "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=PLeRB90AMH9_UheMdsk-DaUPzDMlqougvk&fields=items/contentDetails/videoId,nextPageToken&key=AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k",
+        url: "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=UUGY2E83PapX47mviakM_IpQ&fields=items%2FcontentDetails%2FvideoId%2CnextPageToken&key=AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k",
         async: false,
         success: function (data) {
             result = data;
@@ -42,7 +42,7 @@ $(document).ready(function () {
             var json;
             $.ajax({
                 type: "GET",
-                url: "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&pageToken=" + token + "&playlistId=PLeRB90AMH9_UheMdsk-DaUPzDMlqougvk&fields=items/contentDetails/videoId,nextPageToken&key=AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k",
+                url: "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&pageToken=" + token + "&maxResults=50&playlistId=UUGY2E83PapX47mviakM_IpQ&fields=items%2FcontentDetails%2FvideoId%2CnextPageToken&key=AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k",
                 async: false,
                 success: function (data) {
                     json = data;
