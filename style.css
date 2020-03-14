@@ -1,11 +1,12 @@
- html {
+@media (min-width: 768px) and (max-width: 1018px) {
+html {
             padding: 0;
             background-image: url('banner.jpg');
             background-size: cover;
 	    background-repeat: no-repeat;
 	    background-color: #1f1f1f !important;
         }
-
+        }
 @media (max-width: 767px)  {
 html {
             padding: 0;
