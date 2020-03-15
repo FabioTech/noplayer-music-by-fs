@@ -1,7 +1,7 @@
 @media (min-width: 768px) and (max-width: 1018px) {
 html {
             padding: 0;
-            background-image: url('banner.jpg');
+            background-image: url('banner.png');
             background-size: cover;
 	    background-repeat: no-repeat;
 	    background-color: #1f1f1f !important;
@@ -11,6 +11,18 @@ html {
 html {
             padding: 0;
 	    background-color: #1f1f1f !important;
+	    background-image: url('banner-2.png');
+            background-repeat: no-repeat;
+            bottom: 0;
+            left: 0;
+            overflow: auto;
+            position: absolute;
+            right: 0;
+            text-align: center;
+            top: 0;
+            background-repeat: no-repeat;
+           background-position: center;
+           background-size: cover;
         }
 	}
         
