@@ -64,7 +64,7 @@ html {
         #nextBtn:hover {
             animation: shake 500ms ease-in-out;
         }
-        @media (max-width: 767px)  {
+        @media only screen and (min-width:767px), screen and (max-height:500px) {
 	#nextBtn {
             position: fixed;
             transform: rotate(-90deg) scale(3);
@@ -85,7 +85,7 @@ html {
             animation: shakeLeft 500ms ease-in-out;
         }
 
-        @media (max-width: 767px)  {
+        @media only screen and (min-width:767px), screen and (max-height:500px) {
 	#lastBtn {
             position: fixed;
             transform: rotate(90deg) scale(3);
