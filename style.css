@@ -52,7 +52,15 @@ html {
             margin-bottom: auto;
             margin-top: auto;
         }
-
+        @media (min-width: 768px) and (max-width: 1018px) {
+	#nextBtn {
+            position: fixed;
+            transform: rotate(-90deg) scale(3);
+            right: 40px;
+            top: 100px;
+            cursor: pointer;
+        }
+        }
         #nextBtn {
             position: fixed;
             transform: rotate(-90deg) scale(3);
@@ -64,7 +72,15 @@ html {
         #nextBtn:hover {
             animation: shake 500ms ease-in-out;
         }
-
+        @media (min-width: 768px) and (max-width: 1018px) {
+	#lastBtn {
+            position: fixed;
+            transform: rotate(90deg) scale(3);
+            left: 40px;
+            top: 100px;
+            cursor: pointer;
+        }
+	}	
         #lastBtn {
             position: fixed;
             transform: rotate(90deg) scale(3);
@@ -72,7 +88,6 @@ html {
             top: 300px;
             cursor: pointer;
         }
-
         #lastBtn:hover {
             animation: shakeLeft 500ms ease-in-out;
         }
