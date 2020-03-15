@@ -52,9 +52,7 @@ html {
             margin-bottom: auto;
             margin-top: auto;
         }
-/* NEXTBTN INICIO
-   ========================================================================== */
-/**
+
         #nextBtn {
             position: fixed;
             transform: rotate(-90deg) scale(3);
@@ -75,13 +73,7 @@ html {
             cursor: pointer;
         }
         }
-/* NEXTBTN FIM
-   ========================================================================== */
-/**
 
-/* LASTBTN INICIO
-   ========================================================================== */
-/**
         #lastBtn {
             position: fixed;
             transform: rotate(90deg) scale(3);
@@ -102,10 +94,6 @@ html {
             cursor: pointer;
         }
 	}
-
-/* LASTBTN FIM
-   ========================================================================== */
-/**
 
 
         @keyframes shake {
