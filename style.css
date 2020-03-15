@@ -20,15 +20,14 @@ html {
             right: 0;
             text-align: center;
             top: 0;
-            background-repeat: no-repeat;
-           background-position: center;
-           background-size: cover;
+            background-position: center;
+            background-size: cover;
         }
 	}
         
        img {
 	   max-width:100%;
-       height:auto;
+           height:auto;
        }
 
         body {
