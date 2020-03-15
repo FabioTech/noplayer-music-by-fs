@@ -52,15 +52,9 @@ html {
             margin-bottom: auto;
             margin-top: auto;
         }
-        @media (max-width: 767px)  {
-	#nextBtn {
-            position: fixed;
-            transform: rotate(-90deg) scale(3);
-            right: 40px;
-            top: 100px;
-            cursor: pointer;
-        }
-        }
+/* NEXTBTN INICIO
+   ========================================================================== */
+/**
         #nextBtn {
             position: fixed;
             transform: rotate(-90deg) scale(3);
@@ -73,14 +67,21 @@ html {
             animation: shake 500ms ease-in-out;
         }
         @media (max-width: 767px)  {
-	#lastBtn {
+	#nextBtn {
             position: fixed;
-            transform: rotate(90deg) scale(3);
-            left: 40px;
+            transform: rotate(-90deg) scale(3);
+            right: 40px;
             top: 100px;
             cursor: pointer;
         }
-	}	
+        }
+/* NEXTBTN FIM
+   ========================================================================== */
+/**
+
+/* LASTBTN INICIO
+   ========================================================================== */
+/**
         #lastBtn {
             position: fixed;
             transform: rotate(90deg) scale(3);
@@ -91,6 +92,21 @@ html {
         #lastBtn:hover {
             animation: shakeLeft 500ms ease-in-out;
         }
+
+        @media (max-width: 767px)  {
+	#lastBtn {
+            position: fixed;
+            transform: rotate(90deg) scale(3);
+            left: 40px;
+            top: 100px;
+            cursor: pointer;
+        }
+	}
+
+/* LASTBTN FIM
+   ========================================================================== */
+/**
+
 
         @keyframes shake {
             0% {
