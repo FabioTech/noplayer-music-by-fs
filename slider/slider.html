@@ -1,0 +1,26 @@
+<html>
+<head>
+<script type="text/javascript">
+function slide1(){
+document.getElementById('id').src="https://blogdacris.com.br/wp-content/uploads/2021/10/728x90.png";
+setTimeout("slide2()", 3000)
+document.getElementById('aId').href="https://campanhas.brb.com.br/brb55anos"
+}
+
+function slide2(){
+document.getElementById('id').src="https://blogdacris.com.br/wp-content/uploads/2021/10/728x90-Homem.gif";
+setTimeout("slide1()", 7000)
+document.getElementById('aId').href="https://campanhas.brb.com.br/brb55anos"
+}
+
+</script>
+<style>
+body {
+    margin: 0;
+}
+</style>
+</head>
+<body onLoad="slide1()">
+<a id="aId" target="blank" rel="noopener"><img id="id"></a>
+</body>
+</html>
