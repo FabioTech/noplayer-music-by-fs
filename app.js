@@ -43,15 +43,16 @@
         }
     }
 
-    function nextVideo() {
-        if (position  0) {
-            position--;
-            makeVideo(lastIds[position], false);
-        } else {
-            videoMove('out');
-            player.pauseVideo();
-        }
+function nextVideo() {
+    if (position > 0) {
+        position--;
+        makeVideo(lastIds[position], false);
+    } else {
+        videoMove('out');
+        player.pauseVideo();
     }
+}
+
 
     function videoMove(direction) {
         document.getElementById('output').style.left = (direction === 'in') ? '0%' : '100%';
