@@ -1,4 +1,4 @@
-        
+    
     let videos = [], lastIds = [], position = 0, player;
 
     const PLAYLIST_ID = "PLY2Hmvkw3Jm-7IETm_ie1YvLFDiuUx7gt";
@@ -56,6 +56,14 @@ function nextVideo() {
     }
     videoMove('in');
 }
+        const index = Math.floor(Math.random() * videos.length);
+        const nextId = videos[index];
+        lastIds.push(nextId);
+        position++;
+        makeVideo(nextId, true);
+    }
+    videoMove('in');
+}
             videoMove('out');
             player.pauseVideo();
         }
@@ -89,7 +97,3 @@ function nextVideo() {
         }).catch(err => console.error(err));
     });
 
-
-
-
-   
