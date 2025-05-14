@@ -1,4 +1,4 @@
-    <script>
+    
     let videos = [], lastIds = [], position = 0, player;
 
     const PLAYLIST_ID = "PLeRB90AMH9_UheMdsk-DaUPzDMlqougvk";
@@ -44,21 +44,7 @@
     }
 
     function nextVideo() {
-        if (position < lastIds.length - 1) {
-            position++;
-            makeVideo(lastIds[position], true);
-        } else {
-            const index = Math.floor(Math.random() * videos.length);
-            const nextId = videos[index];
-            lastIds.push(nextId);
-            position++;
-            makeVideo(nextId, true);
-        }
-        videoMove('in');
-    }
-
-    function lastVideo() {
-        if (position > 0) {
+        if (position  0) {
             position--;
             makeVideo(lastIds[position], false);
         } else {
@@ -91,4 +77,4 @@
             console.log(`Vídeos carregados: ${videos.length}`);
         }).catch(err => console.error(err));
     });
-    </script>
+    
