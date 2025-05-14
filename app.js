@@ -5,7 +5,7 @@ $(document).ready(function () {
     const lastIds = [];
     let position = 0;
 
-    const playlistId = "PLeRB90AMH9_UheMdsk-DaUPzDMlqougvk";
+    const playlistId = "PLbpi6ZahtOH7DrxWUmkwvsXnFeCfB5LUp";
     const apiKey = "AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k";
 
     $('#nextBtn').on('click', nextVideo);
