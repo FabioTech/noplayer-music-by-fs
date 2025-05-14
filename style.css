@@ -208,3 +208,40 @@ html {
 	    min-height: rem(500);
      	overflow: hidden;
         }
+
+
+/* Responsividade */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container, .player, .controls {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+button, .button {
+    font-size: 16px;
+    padding: 10px;
+    margin: 5px;
+    width: auto;
+}
+
+@media screen and (max-width: 600px) {
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    button, .button {
+        width: 90%;
+    }
+}
