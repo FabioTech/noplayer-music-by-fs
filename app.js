@@ -1,173 +1,94 @@
-$(document).ready(function () {
-    var videos = [];
-    var dingsda;
-    var lastIds = [];
-    var position = 0;
-    $('#nextBtn').click(function () {
-        nextVideo();
-    });
-    $('#lastBtn').click(function () {
-        lastVideo();
-    });
+    <script>
+    let videos = [], lastIds = [], position = 0, player;
 
-    if (position == 0) {
-        videoMove('out');
-    } else {
+    const PLAYLIST_ID = "PLeRB90AMH9_UheMdsk-DaUPzDMlqougvk";
+    const API_KEY = "AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k";
+
+    function loadPlaylist(pageToken = "") {
+        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&pageToken=${pageToken}&maxResults=50&playlistId=${PLAYLIST_ID}&fields=items/contentDetails/videoId,nextPageToken&key=${API_KEY}`;
+
+        return fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error("Erro ao buscar dados da API");
+                return response.json();
+            })
+            .then(data => {
+                const ids = data.items.map(item => item.contentDetails.videoId);
+                videos.push(...ids);
+                if (data.nextPageToken) {
+                    return loadPlaylist(data.nextPageToken);
+                }
+            });
+    }
+
+    function makeVideo(videoId, autoplay = false) {
+        if (player) {
+            player.loadVideoById(videoId);
+        } else {
+            player = new YT.Player('output', {
+                height: window.innerHeight,
+                width: window.innerWidth,
+                videoId,
+                playerVars: {
+                    autoplay: autoplay ? 1 : 0,
+                    rel: 0,
+                    vq: 'large'
+                },
+                events: {
+                    'onStateChange': (event) => {
+                        if (event.data === YT.PlayerState.ENDED) nextVideo();
+                    }
+                }
+            });
+        }
+    }
+
+    function nextVideo() {
+        if (position < lastIds.length - 1) {
+            position++;
+            makeVideo(lastIds[position], true);
+        } else {
+            const index = Math.floor(Math.random() * videos.length);
+            const nextId = videos[index];
+            lastIds.push(nextId);
+            position++;
+            makeVideo(nextId, true);
+        }
         videoMove('in');
     }
 
-    var result = null;
-    $.ajax({
-        type: "GET",
-        url: "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=PLeRB90AMH9_UheMdsk-DaUPzDMlqougvk&fields=items%2FcontentDetails%2FvideoId%2CnextPageToken&key=AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k",
-        async: false,
-        success: function (data) {
-            result = data;
-        }
-    });
-
-    for (var i = 0; i < 50; i++) {
-        videos.push(result.items[i].contentDetails.videoId);
-    }
-    nextOne(result.nextPageToken);
-
-    console.log("Amount: " + videos.length);
-
-    var nbr = Math.floor((Math.random() * videos.length) + 1);
-    lastIds.push(videos[nbr]);
-    makeVideo(videos[nbr]);
-
-    function nextOne(token) {
-        if (token) {
-            var json;
-            $.ajax({
-                type: "GET",
-                url: "https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&pageToken=" + token + "&maxResults=50&playlistId=PLeRB90AMH9_UheMdsk-DaUPzDMlqougvk&fields=items%2FcontentDetails%2FvideoId%2CnextPageToken&key=AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k",
-                async: false,
-                success: function (data) {
-                    json = data;
-                }
-            });
-            try {
-                for (var i = 0; i < 50; i++) {
-                    videos.push(json.items[i].contentDetails.videoId);
-                }
-                nextOne(json.nextPageToken);
-            } catch (err) {
-                console.log('No more Videos');
-            }
-        } else {
-            console.log('No more Videos');
-        }
-    }
-
-    function makeVideo(id) {
-        if ($('#output').is('iframe')) {
-            dingsda.loadVideoById(id);
-        } else {
-            if (position == 0) {
-                var player;
-                window.onYouTubePlayerAPIReady = function () {
-                    player = new YT.Player('output', {
-                        width: $(window).width(),
-                        height: $(window).height(),
-                        videoId: id,
-                        playerVars: {
-                            rel: 0,
-                            vq: 'large'
-                        },
-                        events: {
-                            onStateChange: onPlayerStateChange
-                        }
-                    });
-                    dingsda = player;
-                }
-            } else {
-                var player;
-                window.onYouTubePlayerAPIReady = function () {
-                    player = new YT.Player('output', {
-                        width: $(window).width(),
-                        height: $(window).height(),
-                        videoId: id,
-                        playerVars: {
-                            autoplay: 1,
-                            rel: 0,
-                            vq: 'large'
-                        },
-                        events: {
-                            onStateChange: onPlayerStateChange
-                        }
-                    });
-                    dingsda = player;
-                }
-            }
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data === 0) {
-                nextVideo();
-            }
-        }
-        return;
-    }
-
-    function onPlayerStateChange(event) {
-        if (event.data === 0) {
-            nextVideo();
-        }
-    }
-
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/player_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    function nextVideo() {
-        if (position == 0) {
-            videoMove('in');
-            position += 1;
-            dingsda.playVideo();
-            return false;
-        }
-        if (position < lastIds.length - 1) {
-            videoMove('in');
-            position += 1;
-            nextId = lastIds[position];
-            makeVideo(nextId);
-        } else {
-            videoMove('in');
-            var nbr = Math.floor((Math.random() * videos.length) + 1);
-            lastIds.push(videos[nbr]);
-            position += 1;
-            makeVideo(videos[nbr]);
-        }
-    }
-
     function lastVideo() {
-        if (position > 1) {
-            position -= 1;
-            videoBefore = lastIds[position-1];
-            makeVideo(videoBefore);
+        if (position > 0) {
+            position--;
+            makeVideo(lastIds[position], false);
         } else {
-            if (position == 1) {
-                position -= 1;
-            }
             videoMove('out');
-            dingsda.pauseVideo();
+            player.pauseVideo();
         }
     }
 
-    function videoMove(way) {
-        if (way == 'in') {
-            console.log('Moved In');
-            $("#output").animate({
-                left: "0%",
-            }, 500);
-        } else if (way == 'out') {
-            console.log('Moved Out');
-            $("#output").animate({
-                left: "100%",
-            }, 500);
-        }
+    function videoMove(direction) {
+        document.getElementById('output').style.left = (direction === 'in') ? '0%' : '100%';
     }
-});
+
+    function onYouTubeIframeAPIReady() {
+        const index = Math.floor(Math.random() * videos.length);
+        const firstId = videos[index];
+        lastIds.push(firstId);
+        makeVideo(firstId);
+    }
+
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+    $(document).ready(() => {
+        $('#nextBtn').on('click', nextVideo);
+        $('#lastBtn').on('click', lastVideo);
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+
+        loadPlaylist().then(() => {
+            console.log(`Vídeos carregados: ${videos.length}`);
+        }).catch(err => console.error(err));
+    });
+    </script>
