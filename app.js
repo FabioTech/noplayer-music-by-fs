@@ -1,60 +1,69 @@
-<script>
+
 $(document).ready(function () {
     const videos = [];
-    let dingsda;
+    let player;
     const lastIds = [];
     let position = 0;
 
-    const playlistId = "PLbpi6ZahtOH7DrxWUmkwvsXnFeCfB5LUp";
+    const playlistId = "PLeRB90AMH9_UheMdsk-DaUPzDMlqougvk";
     const apiKey = "AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k";
 
     $('#nextBtn').on('click', nextVideo);
     $('#lastBtn').on('click', lastVideo);
 
-    if (position === 0) {
-        videoMove('out');
-    } else {
-        videoMove('in');
+    function videoMove(direction) {
+        const left = direction === 'in' ? "0%" : "100%";
+        $("#output").animate({ left }, 500);
     }
 
-    async function fetchVideos(pageToken = "") {
-        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=${playlistId}&key=${apiKey}${pageToken ? `&pageToken=${pageToken}` : ""}`;
+    if (position === 0) {
+        videoMove('out');
+    }
+
+    async function fetchVideos(pageToken = '') {
+        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=${playlistId}&key=${apiKey}${pageToken ? '&pageToken=' + pageToken : ''}`;
         try {
             const response = await fetch(url);
+            const contentType = response.headers.get("content-type");
+            if (!contentType.includes("application/json")) {
+                const text = await response.text();
+                throw new Error("Resposta inválida: " + text);
+            }
             const data = await response.json();
             data.items.forEach(item => videos.push(item.contentDetails.videoId));
             if (data.nextPageToken) {
                 await fetchVideos(data.nextPageToken);
             }
-        } catch (error) {
-            console.error("Erro ao buscar vídeos:", error);
+        } catch (err) {
+            console.error("Erro ao buscar vídeos:", err.message);
         }
     }
 
     async function init() {
         await fetchVideos();
-        console.log("Total de vídeos carregados:", videos.length);
-
+        console.log(`Vídeos carregados: ${videos.length}`);
         const randomIndex = Math.floor(Math.random() * videos.length);
-        lastIds.push(videos[randomIndex]);
-        loadYouTubeAPI(() => makeVideo(videos[randomIndex]));
+        const videoId = videos[randomIndex];
+        lastIds.push(videoId);
+        loadYouTubeAPI(() => makeVideo(videoId));
     }
 
     function loadYouTubeAPI(callback) {
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/player_api";
         window.onYouTubePlayerAPIReady = callback;
-        document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, null);
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
 
     function makeVideo(videoId) {
-        if (typeof dingsda !== 'undefined' && dingsda.loadVideoById) {
-            dingsda.loadVideoById(videoId);
+        if (player && player.loadVideoById) {
+            player.loadVideoById(videoId);
         } else {
-            dingsda = new YT.Player('output', {
+            player = new YT.Player('output', {
                 width: $(window).width(),
                 height: $(window).height(),
-                videoId,
+                videoId: videoId,
                 playerVars: {
                     autoplay: position !== 0 ? 1 : 0,
                     rel: 0,
@@ -77,15 +86,16 @@ $(document).ready(function () {
         if (position === 0) {
             videoMove('in');
             position++;
-            dingsda.playVideo();
+            player.playVideo();
         } else if (position < lastIds.length - 1) {
             position++;
             makeVideo(lastIds[position]);
         } else {
             const randomIndex = Math.floor(Math.random() * videos.length);
-            lastIds.push(videos[randomIndex]);
+            const newId = videos[randomIndex];
+            lastIds.push(newId);
             position++;
-            makeVideo(videos[randomIndex]);
+            makeVideo(newId);
         }
     }
 
@@ -96,16 +106,9 @@ $(document).ready(function () {
         } else if (position === 1) {
             position--;
             videoMove('out');
-            dingsda.pauseVideo();
+            player.pauseVideo();
         }
     }
 
-    function videoMove(direction) {
-        const leftValue = direction === 'in' ? "0%" : "100%";
-        console.log(`Moved ${direction}`);
-        $("#output").animate({ left: leftValue }, 500);
-    }
-
-    init(); // Start
+    init();
 });
-</script>
