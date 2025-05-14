@@ -1,6 +1,6 @@
 let videos = [], lastIds = [], position = 0, player;
 
-const PLAYLIST_ID = "PLeRB90AMH9_UheMdsk-DaUPzDMlqougvk";
+const PLAYLIST_ID = "PLY2Hmvkw3Jm-7IETm_ie1YvLFDiuUx7gt";
 const API_KEY = "AIzaSyDaHEmQpkWJs_GkFjJuQoucV8TSJr4GT_k";
 
 function loadPlaylist(pageToken = "") {
