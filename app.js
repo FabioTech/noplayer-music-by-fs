@@ -1,4 +1,4 @@
-    
+        
     let videos = [], lastIds = [], position = 0, player;
 
     const PLAYLIST_ID = "PLY2Hmvkw3Jm-7IETm_ie1YvLFDiuUx7gt";
@@ -43,11 +43,19 @@
         }
     }
 
-    function nextVideo() {
-        if (position  0) {
-            position--;
-            makeVideo(lastIds[position], false);
-        } else {
+function nextVideo() {
+    if (position < lastIds.length - 1) {
+        position++;
+        makeVideo(lastIds[position], true);
+    } else {
+        const index = Math.floor(Math.random() * videos.length);
+        const nextId = videos[index];
+        lastIds.push(nextId);
+        position++;
+        makeVideo(nextId, true);
+    }
+    videoMove('in');
+}
             videoMove('out');
             player.pauseVideo();
         }
@@ -80,6 +88,8 @@
             console.log(`Vídeos carregados: ${videos.length}`);
         }).catch(err => console.error(err));
     });
+
+
 
 
    
